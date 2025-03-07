@@ -1,3 +1,3 @@
 # Projet 1A Pédale MIDI
 
-test
+* [Revue schéma](1-revue_schema.md)
