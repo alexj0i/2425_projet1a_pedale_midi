@@ -5,9 +5,9 @@
 - **PREVOST Alexian**  
 - **CHERIFI Sacha**
 
-## Description dossiers 
+## Description des dossiers 
 - Datasheets : 
-    * Fichier g21u.pdf : documentation technique du pédalier "Guitar Effects Pedal G2.1u
+    * Fichier g21u.pdf : documentation technique du pédalier "Guitar Effects Pedal G2.1u"
     * Fichier NJL5167K.pdf : documentation technique du capteur photoélectrique
 
 
