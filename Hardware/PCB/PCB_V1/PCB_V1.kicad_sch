@@ -4,6 +4,15 @@
 	(generator_version "8.0")
 	(uuid "56432b71-0851-4531-93d8-c32e80e88a85")
 	(paper "A4")
+	(title_block
+		(title "1A1B Projet Pedale")
+		(date "2025-03-11")
+		(rev "1.0")
+		(company "ENSEA")
+		(comment 1 "CHERIFI Sacha")
+		(comment 2 "TURGUT Iprahim")
+		(comment 3 "PREVOST Alexian")
+	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:MCP6002-xSN"
 			(pin_names
@@ -6197,6 +6206,18 @@
 		)
 		(uuid 6e52b0ef-27e4-46bf-b9e5-df1a0012513f)
 	)
+	(rectangle
+		(start 177.8 111.76)
+		(end 275.59 161.29)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid bb6352a7-2dc8-40c5-9d2f-97f5b061a46c)
+	)
 	(text "AOP\n"
 		(exclude_from_sim no)
 		(at 98.552 17.526 0)
@@ -6216,6 +6237,16 @@
 			)
 		)
 		(uuid "2dfccf0d-e064-46a5-8b74-f96d70265fac")
+	)
+	(text "Transistors"
+		(exclude_from_sim no)
+		(at 184.15 114.046 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "717e6d77-727c-4943-a89f-970cba551552")
 	)
 	(text "Programming Connector\n"
 		(exclude_from_sim no)
@@ -7746,7 +7777,7 @@
 			(uuid "3b24ee21-b251-43b7-be19-bfc6733f8c09")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "#PWR024")
 					(unit 1)
@@ -7812,7 +7843,7 @@
 			(uuid "e1e25c45-8374-4038-a888-aad20eb42aa9")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "#PWR025")
 					(unit 1)
@@ -7887,7 +7918,7 @@
 			(uuid "04d8fa3b-1b55-4547-8012-0d06fcd69f76")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "Q1")
 					(unit 1)
@@ -8062,7 +8093,7 @@
 			(uuid "63d1e39e-c1ad-4a5b-8ae8-02aa162f251f")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "J7")
 					(unit 1)
@@ -8127,7 +8158,7 @@
 			(uuid "e096a723-896c-40e8-93b5-6958e230edc2")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "#PWR027")
 					(unit 1)
@@ -8262,7 +8293,7 @@
 			(uuid "1b1e617d-8644-489e-a59a-29c22f9c1117")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "C2")
 					(unit 1)
@@ -8327,7 +8358,7 @@
 			(uuid "89660877-5121-4473-ae4f-3598d8e75515")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "#PWR026")
 					(unit 1)
@@ -8394,7 +8425,7 @@
 			(uuid "85d12b2a-501d-41a5-8790-2b2ead4dedae")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "TP1")
 					(unit 1)
@@ -8927,7 +8958,7 @@
 			(uuid "ab1dfaca-2b7a-41ee-b191-090ffe59cc3e")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "#PWR010")
 					(unit 1)
@@ -9128,7 +9159,7 @@
 			(uuid "8b6f7ad8-899d-47c1-a9ac-bc2705e27aa7")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "#PWR020")
 					(unit 1)
@@ -9434,7 +9465,7 @@
 			(uuid "33ee4402-fe49-4dd5-89fa-0efbfe1becb3")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "J3")
 					(unit 1)
@@ -10271,7 +10302,7 @@
 			(uuid "5129a587-2a11-47c9-b9d1-14dc4ef363eb")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "#PWR023")
 					(unit 1)
@@ -10406,7 +10437,7 @@
 			(uuid "589d4bf6-7e7c-481b-82f8-efc310bcc866")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "J4")
 					(unit 1)
@@ -10485,7 +10516,7 @@
 			(uuid "e810514d-c974-41e3-abb3-37766f343fb4")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "J6")
 					(unit 1)
@@ -10558,7 +10589,7 @@
 			(uuid "f2218020-4f70-4a94-834d-e8662ae36694")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "RV1")
 					(unit 1)
@@ -10826,7 +10857,7 @@
 			(uuid "8871ef5c-911f-432d-b7e0-ea6b848b8aa3")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "#PWR09")
 					(unit 1)
@@ -11035,7 +11066,7 @@
 			(uuid "ef0ed249-30ad-4ed5-b514-11e4460f6627")
 		)
 		(instances
-			(project ""
+			(project "PCB_V1"
 				(path "/56432b71-0851-4531-93d8-c32e80e88a85"
 					(reference "J1")
 					(unit 1)
