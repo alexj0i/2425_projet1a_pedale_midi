@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "PRT-09536"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2023-06-22-10:55:41)
+    (mountForm default
+        (footprintRef "PRT09536")
+        (spec "System")
+    )
+)

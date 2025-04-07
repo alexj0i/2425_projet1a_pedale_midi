@@ -1,0 +1,9 @@
+Manufacturer=SparkFun
+PartNumber=PRT-09536
+PartCategory=Connector
+PackageCategory=Other
+PinCount=7
+Version=1.1
+Released=2019-12-04 10:51:36
+Downloaded=2025-04-07 12:43:13
+3D=Y

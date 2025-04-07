@@ -1,0 +1,10 @@
+(unit MM)
+
+(package "PRT09536"
+    (type UNDEF)
+    (uver 2)
+    (mountForm default
+        (footprintRef "PRT09536")
+        (spec "default")
+    )
+)
