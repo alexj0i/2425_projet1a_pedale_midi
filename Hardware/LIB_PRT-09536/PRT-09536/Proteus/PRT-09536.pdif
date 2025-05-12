@@ -1,0 +1,154 @@
+;Proteus Design Interchange Format
+(PDIF
+ (vendor "SamacSys Limited")
+ (version 1 0)
+ (library
+  (part "PRT-09536"
+   (description "SparkFun Accessories MIDI Connector - Female Right Angle")
+   (family "CON")
+   (package "PRT09536")
+   (attribute "Datasheet Link" "https://www.sparkfun.com/datasheets/Prototyping/Connectors/MIDI-RA.pdf")
+   (attribute "Geometry.Height" "19.5mm")
+   (attribute "Manufacturer_Name" "SparkFun")
+   (attribute "Manufacturer_Part_Number" "PRT-09536")
+   (attribute "Mouser Part Number" "474-PRT-09536")
+   (attribute "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/SparkFun/PRT-09536?qs=WyAARYrbSnYl1e2cwkZPbQ%3D%3D")
+   (attribute "Arrow Part Number" "")
+   (attribute "Arrow Price/Stock" "")
+   (gate
+    (symbol "PRT-09536")
+    (pin "1" 1 PS)
+    (pin "2" 2 PS)
+    (pin "3" 3 PS)
+    (pin "4" 4 PS)
+    (pin "5" 5 PS)
+    (pin "E1" E1 PS)
+    (pin "E2" E2 PS)
+   )
+  )
+  (symbol "PRT-09536"
+   (units THOU)
+   (origin (pt 0 0))
+   (graphic
+    (stroke 10)
+    (path (pt 200 100) (pt 700 100) (pt 700 -400) (pt 200 -400) (pt 200 100) (closed))
+   )
+   (terminal
+    (body (symbol "PIN") (pt 0 0) (rot 0) (mir 0) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 0 -100) (rot 0) (mir 0) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 0 -200) (rot 0) (mir 0) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 0 -300) (rot 0) (mir 0) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 900 0) (rot 0) (mir X) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 900 -100) (rot 0) (mir X) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 900 -200) (rot 0) (mir X) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+  )
+  (symbol "PIN"
+   (units THOU)
+   (origin (pt 0 0))
+   (graphic
+    (stroke 10)
+    (path (pt 0 0) (pt 200 0))))
+  (symbol "PINSHORT"
+   (units THOU)
+   (origin (pt 0 0))
+   (graphic
+    (stroke 10)
+    (path (pt 0 0) (pt 100 0))))
+  (package "PRT09536"
+   (units MM)
+   (layer TASM
+    (graphic
+     (stroke 0.2)
+     (path
+      (closed true)
+      (pt -18.1 1)
+      (pt 3.1 1)
+      (pt 3.1 -12.5)
+      (pt -18.1 -12.5)
+      (pt -18.1 1))))
+   (layer OCCA
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed true)
+      (pt -18.6 4.125)
+      (pt 3.6 4.125)
+      (pt 3.6 -13)
+      (pt -18.6 -13)
+      (pt -18.6 4.125))))
+   (layer TSLK
+    (graphic
+     (stroke 0.2)
+     (path
+      (closed true)
+      (pt 0.6 1.9)
+      (arc (pt 0.600 1.900) (pt 0.500 1.700) (pt 0.700 1.900) (start 180.0) (sweep 90.0))
+      (pt 0.6 1.7)
+      (arc (pt 0.600 1.700) (pt 0.500 1.700) (pt 0.700 1.900) (start 180.0) (sweep -90.0))
+      (pt 0.6 1.9))))
+   (layer TSLK
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed false)
+      (pt 1.5 1)
+      (pt 3.1 1)
+      (pt 3.1 -12.5)
+      (pt -18.1 -12.5)
+      (pt -18.1 1)
+      (pt -16.5 1))))
+   (layer TSLK
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed false)
+      (pt -9 1)
+      (pt -11 1))))
+   (layer TSLK
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed false)
+      (pt -6 1)
+      (pt -4 1))))
+   (leg 1 (pt 0.000 0.000) (padstack 0))
+   (leg 2 (pt -7.500 0.000) (padstack 0))
+   (leg 3 (pt -15.000 0.000) (padstack 0))
+   (leg 4 (pt -2.500 2.500) (padstack 0))
+   (leg 5 (pt -12.500 2.500) (padstack 0))
+   (leg E1 (pt -2.500 -10.000) (padstack 0))
+   (leg E2 (pt -12.500 -10.000) (padstack 0))
+   (padstack 0
+    (hole 1.5)
+    (plated true)
+    (pad (layer TCOP) (round 2.250))
+    (pad (layer INNER) (round 2.250))
+    (pad (layer BCOP) (round 2.250))
+   )
+   (model "PRT-09536.stp"
+    (euler 0 0 0)
+    (offset 0 0 0)
+   )
+  )
+ )
+)

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--/1375406/1150628/2.50/7/4/Connector/-->
+<quadcept_library>
+  <setting unit="mil" />
+  <textstyle name="Default" height="47.244094488189" strokewidth="7.8740157480315" charwidth="47.244094488189" />
+  <textstyle name="Dimension" height="19.6850393700787" strokewidth="0" charwidth="19.6850393700787" />
+  <textstyle name="H127W0635TH00762" height="50" strokewidth="3" charwidth="25" />
+  <textstyle name="H15W15TH02" height="59.0551181102362" strokewidth="7.8740157480315" charwidth="59.0551181102362" />
+  <padstyle name="c225_h150" surface="False" plated="True" isvia="False" nopaste="True" nomask="True" complex="False" holesize="59.055118110235">
+    <padshape layer="TOP" shape="round" width="88.582677165353" height="88.582677165353" />
+    <padshape layer="TOP_SOLDER_MASK" shape="round" width="96.456692913385" height="96.456692913385" />
+    <padshape layer="INNER" shape="round" width="88.582677165353" height="88.582677165353" />
+    <padshape layer="BOTTOM" shape="round" width="88.582677165353" height="88.582677165353" />
+    <padshape layer="BOTTOM_SOLDER_MASK" shape="round" width="96.456692913385" height="96.456692913385" />
+  </padstyle>
+  <footprint name="PRT09536" originx="0" originy="0" pickpointx="0" pickpointy="0">
+    <pcbpin number="1" name="1" style="c225_h150" originx="0" originy="0" rotation="90" />
+    <pcbpin number="2" name="2" style="c225_h150" originx="-295.27559055118" originy="0" rotation="90" />
+    <pcbpin number="3" name="3" style="c225_h150" originx="-590.55118110236" originy="0" rotation="90" />
+    <pcbpin number="4" name="4" style="c225_h150" originx="-98.425196850392" originy="98.425196850392" rotation="90" />
+    <pcbpin number="5" name="5" style="c225_h150" originx="-492.12598425196" originy="98.425196850392" rotation="90" />
+    <pcbpin number="6" name="E1" style="c225_h150" originx="-98.425196850392" originy="-393.70078740157" rotation="90" />
+    <pcbpin number="7" name="E2" style="c225_h150" originx="-492.12598425196" originy="-393.70078740157" rotation="90" />
+    <line layer="TOP_ASSEMBLY" originx="-712.59842519684" originy="39.370078740157" endx="122.04724409449" endy="39.370078740157" width="7.8740157480314" />
+    <line layer="TOP_ASSEMBLY" originx="122.04724409449" originy="39.370078740157" endx="122.04724409449" endy="-492.12598425196" width="7.8740157480314" />
+    <line layer="TOP_ASSEMBLY" originx="122.04724409449" originy="-492.12598425196" endx="-712.59842519684" endy="-492.12598425196" width="7.8740157480314" />
+    <line layer="TOP_ASSEMBLY" originx="-712.59842519684" originy="-492.12598425196" endx="-712.59842519684" endy="39.370078740157" width="7.8740157480314" />
+    <line layer="TOP_PLACE_BOUND" originx="-732.28346456692" originy="162.40157480315" endx="141.73228346457" endy="162.40157480315" width="3.9370078740157" />
+    <line layer="TOP_PLACE_BOUND" originx="141.73228346457" originy="162.40157480315" endx="141.73228346457" endy="-511.81102362204" width="3.9370078740157" />
+    <line layer="TOP_PLACE_BOUND" originx="141.73228346457" originy="-511.81102362204" endx="-732.28346456692" endy="-511.81102362204" width="3.9370078740157" />
+    <line layer="TOP_PLACE_BOUND" originx="-732.28346456692" originy="-511.81102362204" endx="-732.28346456692" endy="162.40157480315" width="3.9370078740157" />
+    <line layer="TOP_SILKSCREEN" originx="23.622047244094" originy="74.803149606298" endx="23.622047244094" endy="74.803149606298" width="7.8740157480314" />
+    <arc layer="TOP_SILKSCREEN" originx="23.622047244094" originy="70.866141732283" startangle="90.0" sweepangle="180.0" radius="3.9370078740157" width="7.8740157480314" />
+    <line layer="TOP_SILKSCREEN" originx="23.622047244094" originy="66.929133858267" endx="23.622047244094" endy="66.929133858267" width="7.8740157480314" />
+    <arc layer="TOP_SILKSCREEN" originx="23.622047244094" originy="70.866141732283" startangle="-90.0" sweepangle="180.0" radius="3.9370078740157" width="7.8740157480314" />
+    <line layer="TOP_SILKSCREEN" originx="59.055118110235" originy="39.370078740157" endx="122.04724409449" endy="39.370078740157" width="3.9370078740157" />
+    <line layer="TOP_SILKSCREEN" originx="122.04724409449" originy="39.370078740157" endx="122.04724409449" endy="-492.12598425196" width="3.9370078740157" />
+    <line layer="TOP_SILKSCREEN" originx="122.04724409449" originy="-492.12598425196" endx="-712.59842519684" endy="-492.12598425196" width="3.9370078740157" />
+    <line layer="TOP_SILKSCREEN" originx="-712.59842519684" originy="-492.12598425196" endx="-712.59842519684" endy="39.370078740157" width="3.9370078740157" />
+    <line layer="TOP_SILKSCREEN" originx="-712.59842519684" originy="39.370078740157" endx="-649.60629921259" endy="39.370078740157" width="3.9370078740157" />
+    <line layer="TOP_SILKSCREEN" originx="-354.33070866141" originy="39.370078740157" endx="-433.07086614173" endy="39.370078740157" width="3.9370078740157" />
+    <line layer="TOP_SILKSCREEN" originx="-236.22047244094" originy="39.370078740157" endx="-157.48031496063" endy="39.370078740157" width="3.9370078740157" />
+  </footprint>
+  <symbol name="PRT-09536" originx="0" originy="0">
+    <line originx="200" originy="100" endx="700" endy="100" width="0" />
+    <line originx="700" originy="-400" endx="700" endy="100" width="0" />
+    <line originx="700" originy="-400" endx="200" endy="-400" width="0" />
+    <line originx="200" originy="100" endx="200" endy="-400" width="0" />
+    <sympin number="1" originx="200" originy="0" rotation="180" length="100" width="7.8740157480315" flipped="False">
+      <text name="pinname" originx="230" originy="0" style="Default" rotation="0" justify="left" flipped="False" hidden="False" data="1" />
+      <text name="pindes" originx="140" originy="20" style="Default" rotation="0" justify="lowerright" flipped="False" hidden="False" data="1" />
+    </sympin>
+    <sympin number="2" originx="200" originy="-100" rotation="180" length="100" width="7.8740157480315" flipped="False">
+      <text name="pinname" originx="230" originy="-100" style="Default" rotation="0" justify="left" flipped="False" hidden="False" data="2" />
+      <text name="pindes" originx="140" originy="-80" style="Default" rotation="0" justify="lowerright" flipped="False" hidden="False" data="2" />
+    </sympin>
+    <sympin number="3" originx="200" originy="-200" rotation="180" length="100" width="7.8740157480315" flipped="False">
+      <text name="pinname" originx="230" originy="-200" style="Default" rotation="0" justify="left" flipped="False" hidden="False" data="3" />
+      <text name="pindes" originx="140" originy="-180" style="Default" rotation="0" justify="lowerright" flipped="False" hidden="False" data="3" />
+    </sympin>
+    <sympin number="4" originx="200" originy="-300" rotation="180" length="100" width="7.8740157480315" flipped="False">
+      <text name="pinname" originx="230" originy="-300" style="Default" rotation="0" justify="left" flipped="False" hidden="False" data="4" />
+      <text name="pindes" originx="140" originy="-280" style="Default" rotation="0" justify="lowerright" flipped="False" hidden="False" data="4" />
+    </sympin>
+    <sympin number="5" originx="700" originy="0" rotation="0" length="100" width="7.8740157480315" flipped="False">
+      <text name="pinname" originx="670" originy="0" style="Default" rotation="0" justify="right" flipped="False" hidden="False" data="5" />
+      <text name="pindes" originx="760" originy="20" style="Default" rotation="0" justify="lowerleft" flipped="False" hidden="False" data="5" />
+    </sympin>
+    <sympin number="6" originx="700" originy="-100" rotation="0" length="100" width="7.8740157480315" flipped="False">
+      <text name="pinname" originx="670" originy="-100" style="Default" rotation="0" justify="right" flipped="False" hidden="False" data="E1" />
+      <text name="pindes" originx="760" originy="-80" style="Default" rotation="0" justify="lowerleft" flipped="False" hidden="False" data="E1" />
+    </sympin>
+    <sympin number="7" originx="700" originy="-200" rotation="0" length="100" width="7.8740157480315" flipped="False">
+      <text name="pinname" originx="670" originy="-200" style="Default" rotation="0" justify="right" flipped="False" hidden="False" data="E2" />
+      <text name="pindes" originx="760" originy="-180" style="Default" rotation="0" justify="lowerleft" flipped="False" hidden="False" data="E2" />
+    </sympin>
+  </symbol>
+  <component name="PRT-09536" designatorprefix="J" height="767.71653543306" footprint="PRT09536">
+    <comppin designator="1" sympin="1" pinswap="0" gateswap="0" gate="1" group="1" side="" type="Any" name="1" />
+    <comppin designator="2" sympin="2" pinswap="0" gateswap="0" gate="1" group="1" side="" type="Any" name="2" />
+    <comppin designator="3" sympin="3" pinswap="0" gateswap="0" gate="1" group="1" side="" type="Any" name="3" />
+    <comppin designator="4" sympin="4" pinswap="0" gateswap="0" gate="1" group="1" side="" type="Any" name="4" />
+    <comppin designator="5" sympin="5" pinswap="0" gateswap="0" gate="1" group="1" side="" type="Any" name="5" />
+    <comppin designator="E1" sympin="6" pinswap="0" gateswap="0" gate="1" group="1" side="" type="Any" name="E1" />
+    <comppin designator="E2" sympin="7" pinswap="0" gateswap="0" gate="1" group="1" side="" type="Any" name="E2" />
+    <attached_symbol gate="1" name="PRT-09536" />
+    <pinmap designator="1" footprintpin="1" />
+    <pinmap designator="2" footprintpin="2" />
+    <pinmap designator="3" footprintpin="3" />
+    <pinmap designator="4" footprintpin="4" />
+    <pinmap designator="5" footprintpin="5" />
+    <pinmap designator="E1" footprintpin="6" />
+    <pinmap designator="E2" footprintpin="7" />
+    <text name="Datasheet" originx="0" originy="0" style="Default" rotation="0" justify="" flipped="False" hidden="True" data="https://www.sparkfun.com/datasheets/Prototyping/Connectors/MIDI-RA.pdf" />
+    <text name="Description" originx="0" originy="0" style="Default" rotation="0" justify="" flipped="False" hidden="True" data="SparkFun Accessories MIDI Connector - Female Right Angle" />
+    <text name="Manufacturer_Name" originx="0" originy="0" style="Default" rotation="0" justify="" flipped="False" hidden="True" data="SparkFun" />
+    <text name="Manufacturer_Part_Number" originx="750" originy="200" style="Default" rotation="0" justify="left" flipped="False" hidden="False" data="PRT-09536" />
+    <text name="Mouser Part Number" originx="0" originy="0" style="Default" rotation="0" justify="" flipped="False" hidden="True" data="474-PRT-09536" />
+    <text name="Mouser Price/Stock" originx="0" originy="0" style="Default" rotation="0" justify="" flipped="False" hidden="True" data="https://www.mouser.co.uk/ProductDetail/SparkFun/PRT-09536?qs=WyAARYrbSnYl1e2cwkZPbQ%3D%3D" />
+    <text name="Arrow Part Number" originx="0" originy="0" style="Default" rotation="0" justify="" flipped="False" hidden="True" data="" />
+    <text name="Arrow Price/Stock" originx="0" originy="0" style="Default" rotation="0" justify="" flipped="False" hidden="True" data="" />
+  </component>
+</quadcept_library>

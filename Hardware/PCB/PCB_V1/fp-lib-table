@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "PRT-09536")(type "KiCad")(uri "C:/Users/Alexian/Documents/2425_projet1a_pedale_midi/Hardware/LIB_PRT-09536/PRT-09536/KiCad")(options "")(descr "PRT-09536"))
+)
