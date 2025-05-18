@@ -26,7 +26,10 @@ void ControlChange(int pedalValue,int effect)
 // Recupere la valeur du potentiometre suivant l'inclinaison de la pédale et la convertit en un nombre entre 0 127
 uint8_t ADCValue(void)
 {
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
     uint12_t lastADCValue = HAL_ADC_GetValue(&hadc1); //Lit la valeur analogique convertie
+    HAL_ADC_Stop(&hadc1); // economie d'energie on éteint l'adc si il n'est pas utilisé.
     return (uint8_t)((lastADCValue * 127) / 4095);
 }
 
