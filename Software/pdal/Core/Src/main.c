@@ -74,48 +74,48 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	int last_button_time = 0; // Anti-rebonds
+	int lastButtonTime = 0; // Anti-rebonds
 
 	void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	{
 		if (htim->Instance == TIM4)
 		{
-			screen_display();
+			screenDisplay();
 		}
 	}
 
 	/* Fonction de callback des boutons */
 	void HAL_GPIO_EXTI_Callback(int GPIO_Pin)
 	{
-		if ((HAL_GetTick() - last_button_time) > 50)
+		if ((HAL_GetTick() - lastButtonTime) > 50)
 		{ // Anti-rebonds 50ms
 			switch(GPIO_Pin)
 			{
 			case BUTTON_UP:
-				global_to_display++;
-				if (global_to_display > 127) //RQ: pour moi 127 car une data en midi = 1 octet donc au max 128 sons différents possibles
+				globalToDisplay++;
+				if (globalToDisplay > 127) //RQ: pour moi 127 car une data en midi = 1 octet donc au max 128 sons différents possibles
 				{
 				}
 				// Change l'instrument virtuel suivant le numero affiché sur l'ecran en piochant le son associé dans la banque MIDI.
-				ProgramChange(global_to_display);
+				ProgramChange(globalToDisplay);
 				break;
 
 			case BUTTON_DOWN:
-				global_to_display--;
-				if (global_to_display < 0)
+				globalToDisplay--;
+				if (globalToDisplay < 0)
 				{
 				}
 				// Change l'instrument virtuel suivant le numero affiché sur l'ecran en piochant le son associé dans la banque MIDI.
-				ProgramChange(global_to_display);
+				ProgramChange(globalToDisplay);
 				break;
 
 			case PEDAL:
-				ControlChange(ADC_value());
+				ControlChange(ADCValue(), EFFECT);
 				break;
 
 			}
 
-			last_button_time = HAL_GetTick();
+			lastButtonTime = HAL_GetTick();
 		}
 	}
 

@@ -8,8 +8,11 @@
 #ifndef INC_SCREEN_H_
 #define INC_SCREEN_H_
 
+#define COM0 GPIO_PIN_0
+#define COM0 GPIO_PIN_1
+
 // Variable globale pour stocker le nombre à afficher
-extern int global_to_display;
+extern int globalToDisplay;
 
 // Tableau contenant les valeurs pour les chiffres de 0 à 9 ( CATHODE COMMUNE )
 const uint8_t array[10] =
@@ -42,6 +45,6 @@ const uint8_t array[10] =
 };
  */
 
-void screen_display(void);
+void screenDisplay(void);
 
 #endif /* INC_SCREEN_H_ */

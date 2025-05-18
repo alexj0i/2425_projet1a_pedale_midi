@@ -1,7 +1,7 @@
 /*
  * midi.c
  *
- *  Created on: Mar 10, 2025
+ *  Created on: May 12, 2025
  *      Author: sacha
  */
 
@@ -17,18 +17,17 @@ void ProgramChange(int MIDISoundNumber)
 
 // Fonction pedale MIDI changement de valeur d'un bouton au fonctionnement définit
 
-void ControlChange(int pedalValue)
+void ControlChange(int pedalValue,int effect)
 {
-    int data[3] = {0xB0, 0, pedalValue};  // 0xB0 = Control Change sur canal 1 bouton 0
+    int data[3] = {0xB0, effect, pedalValue};  // 0xB0 = Control Change sur canal 1 bouton 0
     HAL_UART_Transmit(&huart1, data, 3, HAL_MAX_DELAY);
 }
 
 // Recupere la valeur du potentiometre suivant l'inclinaison de la pédale et la convertit en un nombre entre 0 127
-int ADC_value(void)
+uint8_t ADCValue(void)
 {
-    int adcValue = HAL_ADC_GetValue(&hadc1);//Lit la valeur convertie
-    HAL_ADC_Stop(&hadc1);
-    return (uint8_t)((adcValue * 127) / 4095);
+    uint12_t lastADCValue = HAL_ADC_GetValue(&hadc1); //Lit la valeur analogique convertie
+    return (uint8_t)((lastADCValue * 127) / 4095);
 }
 
 
