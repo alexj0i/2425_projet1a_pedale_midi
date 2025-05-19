@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "midi.h"
 #include "screen.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,6 +65,58 @@ int __io_putchar(int chr)
 
 	return chr;
 }
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if (htim->Instance == TIM4)
+	{
+		screenDisplay();
+	}
+}
+
+/* Fonction de callback des boutons */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	static int lastButtonTime = 0; // Anti-rebonds
+
+	if ((HAL_GetTick() - lastButtonTime) > 10)
+	{ // Anti-rebonds 50ms
+		switch(GPIO_Pin)
+		{
+		case BUTTON_UP:
+			globalToDisplay++;
+			// Change l'instrument virtuel suivant le numero affiché sur l'ecran en piochant le son associé dans la banque MIDI.
+			ProgramChange(globalToDisplay);
+			printf("%d \r\n", globalToDisplay);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8,0);
+			if (globalToDisplay > 127) //RQ: pour moi 127 car une data en midi = 1 octet donc au max 128 sons différents possibles
+			{
+				globalToDisplay=127;
+			}
+			break;
+
+		case BUTTON_DOWN:
+			globalToDisplay--;
+			// Change l'instrument virtuel suivant le numero affiché sur l'ecran en piochant le son associé dans la banque MIDI.
+			ProgramChange(globalToDisplay);
+			printf("%d \r\n", globalToDisplay);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8,1);
+			if (globalToDisplay < 0)
+			{
+				globalToDisplay=0;
+			}
+			break;
+
+		case PEDAL:
+			ControlChange(ADCValue(), EFFECT);
+			printf("%d \r\n", ADCValue());
+			break;
+
+		}
+
+		lastButtonTime = HAL_GetTick();
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -74,50 +127,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	int lastButtonTime = 0; // Anti-rebonds
 
-	void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-	{
-		if (htim->Instance == TIM4)
-		{
-			screenDisplay();
-		}
-	}
 
-	/* Fonction de callback des boutons */
-	void HAL_GPIO_EXTI_Callback(int GPIO_Pin)
-	{
-		if ((HAL_GetTick() - lastButtonTime) > 50)
-		{ // Anti-rebonds 50ms
-			switch(GPIO_Pin)
-			{
-			case BUTTON_UP:
-				globalToDisplay++;
-				if (globalToDisplay > 127) //RQ: pour moi 127 car une data en midi = 1 octet donc au max 128 sons différents possibles
-				{
-				}
-				// Change l'instrument virtuel suivant le numero affiché sur l'ecran en piochant le son associé dans la banque MIDI.
-				ProgramChange(globalToDisplay);
-				break;
 
-			case BUTTON_DOWN:
-				globalToDisplay--;
-				if (globalToDisplay < 0)
-				{
-				}
-				// Change l'instrument virtuel suivant le numero affiché sur l'ecran en piochant le son associé dans la banque MIDI.
-				ProgramChange(globalToDisplay);
-				break;
-
-			case PEDAL:
-				ControlChange(ADCValue(), EFFECT);
-				break;
-
-			}
-
-			lastButtonTime = HAL_GetTick();
-		}
-	}
 
 
   /* USER CODE END 1 */
@@ -151,7 +163,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+		// HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

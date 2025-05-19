@@ -17,6 +17,126 @@
     * Emplacement de la partie programmation sur le logiciel STM32CubeIde. 
 
 
+## I / PARTIE HARDWARE
+
+### Architecture Générale
+
+Le système repose sur une carte STM32 qui centralise la lecture des entrées (pédale, boutons), l’affichage 7 segments, et la transmission MIDI via UART. L’ensemble est alimenté en **3,3 V**, régulé à partir d’une source **+5 V**.
+
+---
+
+### Schéma Électronique
+
+Le schéma du projet a été réalisé sur **KiCad**. Il comprend :
+
+- **Unité centrale** : STM32G431KBTx
+- **Conditionnement du signal de pédale** via AOP
+- **Commande des LED 7 segments** avec transistors PNP à résistances intégrées
+- **Régulation d’alimentation 5V → 3.3V**
+- **Connecteurs** : connecteur STDC14 entrées boutons, affichage LED, communication série
+
+---
+
+### Détail des blocs matériels
+
+#### 1. Microcontrôleur
+- **Référence** : STM32G431KBTx  
+- **Architecture** : ARM Cortex-M4, fréquence max 170 MHz  
+- **Format** : LQFP-32  
+- **Périphériques utilisés** :
+  - **ADC1** pour lire la tension envoyée par la pédale (valeur analogique)
+  - **GPIOs** pour lire l'état des boutons UP/DOWN
+  - **EXTI** pour gérer les interruptions sur appuis bouton / pédale
+  - **USART1 (UART)** pour la communication MIDI (sortie TX)
+  - **TIM4** pour gérer le multiplexage de l'affichage 7 segments (interruption périodique)
+- **Alimentation** : 3.3V régulée par LDO
+- **Avantages** :
+  - Microcontrôleur puissant et polyvalent
+  - Intégration de nombreuses fonctionnalités sur un boîtier compact
+
+#### 2. Alimentation
+- **Composant principal** : BU33SD5WG-TR (Régulateur LDO)
+- **Entrée** : +5V (via connecteur J5)
+- **Sortie** : +3.3V (pour alimenter le microcontrôleur, les transistors, l’AOP)
+- **Protection / filtrage** :
+  - **Condensateurs** d’entrée et de sortie (1 µF chacun)
+  - **LED** de visualisation d'alimentation (D1)
+- **Pourquoi ce choix ?**
+  - Faible dropout voltage
+  - Très faible consommation de repos
+  - Format compact (SOT-23-5)
+
+#### 3. Entrée analogique – Pédale d’expression
+- **Signal d’entrée** : tension analogique entre 0 V et 3.3 V issue d’un capteur optique (NJL5167K)
+- **Conditionnement du signal** :
+  - Utilisation d’un double AOP : **MCP6002**
+    - Canal 1 : buffer (impédance d’entrée élevée, stabilité)
+    - Canal 2 : amplificateur non-inverseur (gain défini par R6/R4)
+  - **Potentiomètre (RV1 = 470 Ω)** pour réglage fin du gain ou de la tension de référence
+  - **Filtrage** : R et C en entrée pour atténuer les perturbations haute fréquence
+- **Pourquoi ce choix ?**
+  - MCP6002 est un AOP **rail-to-rail**, faible consommation, économique
+  - Compatible avec alimentation 3.3V
+
+#### 4. Affichage LED 7 segments
+- **Nombre de chiffres** : 2 chiffres (double afficheur)
+- **Commande** :
+  - **Multiplexage** : affichage alterné via interruptions du TIM4
+  - **Segments (a–g)** câblés en parallèle sur un port GPIO (ex: GPIOB)
+  - **Anodes communes** : activées alternativement via 2 transistors
+- **Transistors utilisés** :
+  - **DTA123J** (Q1, Q2)
+    - Transistors PNP avec résistances intégrées (R1 = 2.2 kΩ, R2 = 47 kΩ)
+    - Pilotés par le microcontrôleur (commutation rapide, faible encombrement)
+- **Pourquoi ce choix ?**
+  - Réduction du nombre de broches GPIO (affichage multiplexé)
+  - Meilleure lisibilité pour l’utilisateur
+  - Moins de composants passifs nécessaires grâce aux transistors "pré-polarisés"
+
+#### 5. Entrées utilisateur – Boutons poussoirs
+- **Boutons** :
+  - UP (J6) et DOWN (J6)
+  - Pull-down via résistances de 47 kΩ (R7, R8)
+  - Connexions sur GPIOs avec **interruptions EXTI**
+- **Utilisation** :
+  - Sélection de presets MIDI (valeurs entre 0 et 127)
+  - Incrémentation / décrémentation de la variable `globalToDisplay`
+- **Protection / rebond logiciel** :
+  - Anti-rebond logiciel via `HAL_GetTick()` + temporisation 50 ms
+
+#### 6. Communication MIDI
+- **Interface** : UART via USART1
+- **Niveau logique** : TTL 3.3V (compatible PC ou interface MIDI-USB)
+- **Format des messages** :
+  - **Program Change** : `[0xC0, num_programme]`
+  - **Control Change** : `[0xB0, effet, valeur]`
+- **Utilisation** :
+  - Envoi vers un PC ou un synthétiseur logiciel
+  - Communication unidirectionnelle (TX uniquement)
+
+#### 7. Programmation / Debug
+- **Connecteur STDC14 (J3)** :
+  - Connexion au programmateur ST-Link
+  - Accès aux signaux :
+    - SWCLK, SWDIO (programmation/debug)
+    - TX_DEBUG, RX_DEBUG (UART secondaire pour impression/log)
+- **Pourquoi ce choix ?**
+  - Connecteur standard ST utilisé à l’ENSEA
+  - Facilité de reprogrammation et débogage en temps réel
+
+
+### Justification du choix des composants
+
+| Composant           | Rôle                    | Justification                                           |
+|---------------------|-------------------------|---------------------------------------------------------|
+| STM32G431KBTx       | Contrôle principal       | Compatibilité ADC, UART, TIM, GPIO. Format compact.     |
+| MCP6002             | AOP pour pédale          | Rail-to-rail, faible consommation, économique.          |
+| DTA123J             | Commutation LED          | Transistors PNP avec résistances intégrées → gain de place. |
+| BU33SD5WG           | Régulateur               | Régulation stable 3.3V, faible chute de tension.        |
+| RV1 (470 Ω)         | Réglage de gain          | Permet un calibrage manuel de la pédale.                |
+| Affichage 7 segments| Retour visuel utilisateur| Simple, lisible, facilement multiplexé avec 2 chiffres. |
+
+
 # II/PARTIE SOFTWARE
 # Notions clefs
 ## **1. DEFINITION DU MIDI**

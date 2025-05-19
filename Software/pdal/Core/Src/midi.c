@@ -6,6 +6,9 @@
  */
 
 #include "midi.h"
+
+#include "adc.h"
+#include "usart.h"
 //Forme message MIDI : Status, Data 1, Data 2
 
 // Fonction d'envoi d'un changement de de son dans la banque MIDI
@@ -28,7 +31,7 @@ uint8_t ADCValue(void)
 {
 	HAL_ADC_Start(&hadc1);
 	HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-    uint12_t lastADCValue = HAL_ADC_GetValue(&hadc1); //Lit la valeur analogique convertie
+	uint32_t lastADCValue = HAL_ADC_GetValue(&hadc1); //Lit la valeur analogique convertie
     HAL_ADC_Stop(&hadc1); // economie d'energie on éteint l'adc si il n'est pas utilisé.
     return (uint8_t)((lastADCValue * 127) / 4095);
 }
