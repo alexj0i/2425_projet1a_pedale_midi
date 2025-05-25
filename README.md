@@ -254,6 +254,7 @@ HAL_UART_Transmit(&huart1, message, 3, HAL_MAX_DELAY);
 }
 ```
 >--- ***Pourquoi cette fonction ?*** ---
+>
 >Un **Control Change** permet de **modifier des paramètres en temps réel**, comme le volume.
 > * `message[3]` est un tableau de 3 octets, correspondant à un message **MIDI Control Change**. Ici, le message MIDI signifie :  *"Change la valeur de l'`effect` voulu sur le canal MIDI 1 avec la valeur `pedalValue`."*
 >* La fonction `HAL_UART_Transmit` envoie ce message via la liaison **série UART**.
@@ -267,6 +268,7 @@ HAL_UART_Transmit(&huart1, data, 2, HAL_MAX_DELAY);
 }
 ```
 >--- ***Pourquoi cette fonction ?*** ---
+>
 >Un **Program Change** permet de **changer le son ou le preset** utilisé par  l'instrument.
 > * `message[2]` est un tableau de 2 octets, correspondant à un message **MIDI Program Change**. Ici, le message MIDI signifie :  *"Change le programme (son) de l'instrument sur le canal 1 pour le programme `MIDISoundNumber`."*
 >* La fonction `HAL_UART_Transmit` envoie ce message via la liaison **série UART**.
@@ -280,6 +282,7 @@ return (uint8_t)((adcValue * 127) / 4095);
 }
 ```
 >--- ***Pourquoi cette fonction ?*** ---
+>
 > Un **ADC** (Analog-to-Digital Converter) permet de convertir une **tension analogique** (par exemple entre **0V et 3.3V**) en une **valeur numérique** exploitable par un microcontrôleur.  
 Si l’ADC est en **résolution 12 bits**, il produit des valeurs comprises entre **0 et 4095**. Or, dans le protocole **MIDI**, les données comme les valeurs de contrôle sont codées sur **7 bits**, c’est-à-dire de **0 à 127**.
 Ainsi, pour utiliser une valeur provenant de l’ADC dans un message MIDI, il est nécessaire de convertir la plage **0–4095** vers la plage **0–127**.
@@ -289,11 +292,23 @@ Ainsi, pour utiliser une valeur provenant de l’ADC dans un message MIDI, il es
 > * `(uint8_t)((adcValue * 127) / 4095)` **convertit** la valeur 12 bits (0–4095) en 7 bits (0–127), proportionnellement  et le **cast** en `(uint8_t)` assure que la valeur retournée est bien entre 0 et 127.
 
 **Contenu du midi.h :** 
+```
+#include "main.h"
+
+#define BUTTON_UP GPIO_PIN_12
+#define BUTTON_DOWN GPIO_PIN_11
+#define PEDAL GPIO_PIN_0
+#define EFFECT 7 //Volume
+
+void ProgramChange(int MIDISoundNumber);
+void ControlChange(int pedalValue, int effect);
+uint8_t ADCValue(void);
+```
 
 **Contenu du screen.c :** 
 * **Multiplexage pour l'affichage de l'écran 7 cadrants**
 ```
-extern  int globalToDisplay;
+int globalToDisplay;
 
 //CATHODE COMMUNE
 const  uint8_t array[10] =
@@ -330,6 +345,7 @@ else
 }
 ```
 >--- ***Pourquoi cette fonction ?*** ---
+>
 >`screenDisplay()` qui gère l’affichage des deux chiffres d’un écran 7 segments. Grâce au multiplexage, chaque chiffre est allumé alternativement très rapidement, ce qui donne l’illusion qu’ils sont allumés en même temps.
 > * `globalToDisplay`contient **le nombre à afficher** (entre 0 et 99).
 > * `const uint8_t array[10]` contient les **valeurs binaires** à envoyer aux segments (a–g) du 7 segments pour afficher les chiffres de 0 à 9.
@@ -349,6 +365,18 @@ Activent le chiffre des unités et désactive le chiffre des dizaines.
 Alterne la valeur de `displayNumber` entre 0 et 1 à chaque appel. Elle permet de basculer l’affichage entre les deux chiffres du 7 segments pour réaliser le multiplexage.
 
 **Contenu du screen.h :** 
+```
+#include "main.h"
+
+#define GPIO_PORT_B GPIOB
+#define COM0 GPIO_PIN_6
+#define COM1 GPIO_PIN_5
+
+// Variable globale pour stocker le nombre à afficher
+extern int globalToDisplay;
+
+void screenDisplay(void);
+```
 
 **Contenu du main.c :** 
 * **Interruptions et TIMER**
@@ -395,6 +423,7 @@ if ((HAL_GetTick() - lastButtonTime) > 50)
 }
 ```
 >--- ***Pourquoi ce code ?*** ---
+>
 >Ce code gère **l'affichage de l'écran** et la **gestion des boutons et de la pédale**. Il utilise un **TIM4** pour le multiplexage de l’écran, et des **interruptions GPIO** pour réagir aux appuis boutons et à la pédale.
 >* `void HAL_GPIO_EXTI_Callback(int GPIO_Pin)` se déclenche automatiquement lors d’une interruption sur un bouton ou la pédale i.e lors d'un appui d'un des boutons ou de la pédale.
 >> Dans le cas ou le bouton d'incrémentation est préssé (`case BUTTON_UP:`):
