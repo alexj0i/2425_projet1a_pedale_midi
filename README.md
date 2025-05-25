@@ -406,6 +406,8 @@ if ((HAL_GetTick() - lastButtonTime) > 50)
  
  
 ## **3. Paramétrage de la STM32( pin, TIMER, interruptions )**
+
+![Texte alternatif](Doc/ImgReadme/GPIOexti.png "Titre de l'image").
  
 
 ## **4. Résumé du fonctionnement SOFTWARE**
