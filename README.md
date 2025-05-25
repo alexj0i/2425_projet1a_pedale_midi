@@ -447,7 +447,7 @@ if ((HAL_GetTick() - lastButtonTime) > 50)
 
 ![Texte alternatif](Doc/ImgReadme/TIMNVIC.png "Titre de l'image").
 >On règle avec PRESCALER et ARR la vitesse d’exécution de l’interruption pour gérer l’affichage sans scintillement sur le cadran.
-$`\text{Fréquence du timer} = \frac{72\,000\,000}{(19 + 1) \cdot (7999 + 1)} = 450 \, \text{fois par seconde}`$
+$`\text{Fréquence du timer} = \frac{170\,000\,000}{(19 + 1) \cdot (7999 + 1)} = 1062.5 \, \text{fois par seconde}`$
  
 
 ## **4. Résumé du fonctionnement SOFTWARE**
