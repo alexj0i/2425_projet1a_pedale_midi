@@ -408,6 +408,18 @@ if ((HAL_GetTick() - lastButtonTime) > 50)
 ## **3. Paramétrage de la STM32( pin, TIMER, interruptions )**
 
 ![Texte alternatif](Doc/ImgReadme/GPIOexti.png "Titre de l'image").
+Les pins PA11 et PA12 correspondent aux lignes d’interruption EXTI11 et EXTI12. 
+
+![Texte alternatif](Doc/ImgReadme/Exti.png "Titre de l'image").
+En activant EXTI10–15, on captures les événements sur ces deux lignes donc nos appuis des boutons UP et DOWN.
+
+![Texte alternatif](Doc/ImgReadme/TIMGlobalInterupt.png "Titre de l'image").
+On active l’interruption du TIM4 pour que le microcontrôleur réagisse automatiquement quand le timer a fini de compter jusqu’à la valeur 7999
+
+![Texte alternatif](Doc/ImgReadme/TIMNVIC.png "Titre de l'image").
+On règle avec PRESCALER et ARR la vitesse d’exécution de l’interruption pour gérer l’affichage sans scintillement sur le cadran.
+
+![Texte alternatif](Doc/ImgReadme/GPIOexti.png "Titre de l'image").
  
 
 ## **4. Résumé du fonctionnement SOFTWARE**
