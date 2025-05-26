@@ -71,6 +71,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if (htim->Instance == TIM4)
 	{
 		screenDisplay();
+		//ControlChange(ADCValue(), EFFECT);
+		//printf("%d \r\n", ADCValue());
 	}
 }
 
@@ -79,7 +81,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	static int lastButtonTime = 0; // Anti-rebonds
 
-	if ((HAL_GetTick() - lastButtonTime) > 10)
+	if ((HAL_GetTick() - lastButtonTime) > 200)
 	{ // Anti-rebonds 50ms
 		switch(GPIO_Pin)
 		{
@@ -88,7 +90,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			// Change l'instrument virtuel suivant le numero affiché sur l'ecran en piochant le son associé dans la banque MIDI.
 			ProgramChange(globalToDisplay);
 			printf("%d \r\n", globalToDisplay);
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8,0);
 			if (globalToDisplay > 127) //RQ: pour moi 127 car une data en midi = 1 octet donc au max 128 sons différents possibles
 			{
 				globalToDisplay=127;
@@ -100,18 +101,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			// Change l'instrument virtuel suivant le numero affiché sur l'ecran en piochant le son associé dans la banque MIDI.
 			ProgramChange(globalToDisplay);
 			printf("%d \r\n", globalToDisplay);
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8,1);
 			if (globalToDisplay < 0)
 			{
 				globalToDisplay=0;
 			}
 			break;
-
-		case PEDAL:
-			ControlChange(ADCValue(), EFFECT);
-			printf("%d \r\n", ADCValue());
-			break;
-
 		}
 
 		lastButtonTime = HAL_GetTick();
@@ -127,11 +121,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
-
-
-
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -156,7 +145,11 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-	printf("Test\r\n");
+  globalToDisplay = 0;                // Valeur de départ « 00 »
+
+  HAL_TIM_Base_Start_IT(&htim4);      // démarre le multiplexage
+
+  printf("Test\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -166,7 +159,10 @@ int main(void)
 		// HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
 
     /* USER CODE END WHILE */
-
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,1);
+		HAL_Delay(100);
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,0);
+		HAL_Delay(100);
     /* USER CODE BEGIN 3 */
 	}
   /* USER CODE END 3 */

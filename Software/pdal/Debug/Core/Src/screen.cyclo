@@ -1,1 +1,2 @@
-../Core/Src/screen.c:28:6:screenDisplay	2
+../Core/Src/screen.c:35:6:screenDisplay	2
+../Core/Src/screen.c:58:6:displayBar	6

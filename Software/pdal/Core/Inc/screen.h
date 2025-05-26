@@ -11,8 +11,8 @@
 #include "main.h"
 
 #define GPIO_PORT_B GPIOB
-#define COM0 GPIO_PIN_6
-#define COM1 GPIO_PIN_5
+#define COM0 GPIO_PIN_5
+#define COM1 GPIO_PIN_6
 
 // Variable globale pour stocker le nombre à afficher
 extern int globalToDisplay;
