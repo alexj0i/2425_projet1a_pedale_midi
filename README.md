@@ -509,8 +509,10 @@ if ((HAL_GetTick() - lastButtonTime) > 50)
 >* `void HAL_GPIO_EXTI_Callback(int GPIO_Pin)` se déclenche automatiquement lors d’une interruption sur un bouton ou la pédale i.e lors d'un appui d'un des boutons ou de la pédale.
 >> Dans le cas ou le bouton d'incrémentation est préssé (`case BUTTON_UP:`):
  On icrémente `globalToDisplay` pour passer au **son suivant** et on envoie un message MIDI **Program Change** via`ProgramChange(globalToDisplay)`.
+ >>
  >>Dans le cas ou le bouton d'incrémentation est préssé (`case BUTTON_DOWN:`):
  On décrémente `globalToDisplay` pour passer au **son précédent** et on envoie un message MIDI **Program Change** via`ProgramChange(globalToDisplay)`.
+ >>
 >>Dans le cas ou la pédale est préssée en passant par un TIMER:
   On envoie une commande MIDI de type **Control Change** qui modifie la valeur de l'`EFFECT` suivant la valeur de la lecture de l'**ADC** via `ADCValue()`.
  
