@@ -384,24 +384,29 @@ uint8_t ADCValue(void);
 ```
 int globalToDisplay;
 
-//CATHODE COMMUNE
-const  uint8_t array[10] =
-{
-0b00111111, // 0
-0b00000110, // 1
-0b01011011, // 2
-0b01001111, // 3
-0b01100110, // 4
-0b01101101, // 5
-0b01111101, // 6
-0b00000111, // 7
-0b01111111, // 8
-0b01101111 // 9
+//Ordre : A B C D E F G (mappés sur bits 1 3 4 5 6 7 8)
+const uint16_t array[10] = {
+    (0<<1)|(0<<3)|(0<<4)|(0<<5)|(0<<6)|(0<<7)|(1<<8), // 0
+    (1<<1)|(0<<3)|(0<<4)|(1<<5)|(1<<6)|(1<<7)|(1<<8), // 1
+    (0<<1)|(0<<3)|(1<<4)|(0<<5)|(0<<6)|(1<<7)|(0<<8), // 2
+    (0<<1)|(0<<3)|(0<<4)|(0<<5)|(1<<6)|(1<<7)|(0<<8), // 3
+    (1<<1)|(0<<3)|(0<<4)|(1<<5)|(1<<6)|(0<<7)|(0<<8), // 4
+    (0<<1)|(1<<3)|(0<<4)|(0<<5)|(1<<6)|(0<<7)|(0<<8), // 5
+    (0<<1)|(1<<3)|(0<<4)|(0<<5)|(0<<6)|(0<<7)|(0<<8), // 6
+    (0<<1)|(0<<3)|(0<<4)|(1<<5)|(1<<6)|(1<<7)|(1<<8), // 7
+    (0<<1)|(0<<3)|(0<<4)|(0<<5)|(0<<6)|(0<<7)|(0<<8), // 8
+    (0<<1)|(0<<3)|(0<<4)|(0<<5)|(1<<6)|(0<<7)|(0<<8), // 9
 };
 
 void  screenDisplay(void) 
 {
 static  int displayNumber = 0;
+	//Effacement de la virgule pour l'afficheur
+    HAL_GPIO_WritePin(GPIOB, DOT_PIN, GPIO_PIN_SET);
+
+	//Initialisation des segments (1,3,4,5,6,7,8)
+		GPIOA->ODR &= ~( (1<<1) | (1<<3) | (1<<4) | (1<<5) | (1<<6) | (1<<7) | (1<<8) );
+		
 if (displayNumber == 0) 
 	{
 	GPIOB->ODR = array[globalToDisplay / 10];
@@ -442,9 +447,10 @@ Alterne la valeur de `displayNumber` entre 0 et 1 à chaque appel. Elle permet d
 ```
 #include "main.h"
 
+#define DOT_PIN GPIO_PIN_0 
 #define GPIO_PORT_B GPIOB
-#define COM0 GPIO_PIN_6
-#define COM1 GPIO_PIN_5
+#define COM0 GPIO_PIN_5
+#define COM1 GPIO_PIN_6
 
 // Variable globale pour stocker le nombre à afficher
 extern int globalToDisplay;
@@ -462,6 +468,7 @@ void  HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 if (htim->Instance == TIM4)
 	{
 	screenDisplay();
+	ControlChange(ADCValue(), EFFECT); // Il faudrait faire un autre TIMER pour cette ligne
 	}
 }
 
@@ -485,10 +492,6 @@ if ((HAL_GetTick() - lastButtonTime) > 50)
 				{
 				}
 			ProgramChange(globalToDisplay);
-			break;
-			
-		case PEDAL:
-			ControlChange(ADCValue(), EFFECT);
 			break;
 			
 	 }
@@ -537,8 +540,8 @@ sequenceDiagram
     activate STM32
 
     STM32->>STM32: Anti-rebond (HAL_GetTick())
-    STM32->>STM32: Inc/Déc global_to_display (0-127)
-    STM32->>STM32: ProgramChange(global_to_display)
+    STM32->>STM32: Inc/Déc globalToDisplay (0-127)
+    STM32->>STM32: ProgramChange(globalToDisplay)
 
     Note over STM32,UART: Envoi MIDI (Program Change)
     STM32->>UART: UART_Transmit([0xC0, num_son])
@@ -550,9 +553,9 @@ sequenceDiagram
     deactivate PC
 
     Note over Bouton,STM32: Mouvement de la pédale
-    Bouton->>STM32: GPIO_EXTI_Callback(PEDAL)
+    Bouton->>STM32: TIM_PeriodElapsedCallback
     activate STM32
-    STM32->>STM32: ADC_value() → pedalValue (0-127)
+    STM32->>STM32: ADCValue() → pedalValue (0-127)
     STM32->>STM32: ControlChange(pedalValue, effect)
 
     Note over STM32,UART: Envoi MIDI (Control Change)
