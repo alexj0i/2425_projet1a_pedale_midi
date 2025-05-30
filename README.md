@@ -351,8 +351,11 @@ HAL_UART_Transmit(&huart1, data, 2, HAL_MAX_DELAY);
 ``` 
 uint8_t ADCValue(void)
 {
-uint12_t adcValue = HAL_ADC_GetValue(&hadc1);
-return (uint8_t)((adcValue * 127) / 4095);
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+	uint32_t lastADCValue = HAL_ADC_GetValue(&hadc1); 
+    HAL_ADC_Stop(&hadc1); // economie d'energie on éteint l'adc si il n'est pas utilisé.
+    return (uint8_t)((lastADCValue * 127) / 4095);
 }
 ```
 >--- ***Pourquoi cette fonction ?*** ---
@@ -360,6 +363,7 @@ return (uint8_t)((adcValue * 127) / 4095);
 > Un **ADC** (Analog-to-Digital Converter) permet de convertir une **tension analogique** (par exemple entre **0V et 3.3V**) en une **valeur numérique** exploitable par un microcontrôleur.  
 Si l’ADC est en **résolution 12 bits**, il produit des valeurs comprises entre **0 et 4095**. Or, dans le protocole **MIDI**, les données comme les valeurs de contrôle sont codées sur **7 bits**, c’est-à-dire de **0 à 127**.
 Ainsi, pour utiliser une valeur provenant de l’ADC dans un message MIDI, il est nécessaire de convertir la plage **0–4095** vers la plage **0–127**.
+>* `HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY)` permet d'attendre que la conversion se fasse correctement.
 >* `HAL_ADC_GetValue(&hadc1)` lit la dernière **valeur convertie par l’ADC**.
 >`adcValue` sera une valeur comprise entre **0 et 4095** (12 bits).
 >
