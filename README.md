@@ -7,15 +7,23 @@
 - **CHERIFI Sacha**
 
 ## Description des dossiers 
-- Datasheets : 
-    * Fichier g21u.pdf : documentation technique du pédalier "Guitar Effects Pedal G2.1u".
-    * Fichier NJL5167K.pdf : documentation technique du capteur photoélectrique.
-    * Fichier DTA123JCAHZGT116 : documentation technique du transistor.
+- Doc : 
+  - datasheets
+      * Fichier g21u.pdf : documentation technique du pédalier "Guitar Effects Pedal G2.1u".
+      * Fichier NJL5167K.pdf : documentation  technique du capteur photoélectrique.
+      * Fichier DTA123JCAHZGT116 : documentation technique du transistor.
+      * Schema ampliOp original
+  - ImgReadme
+      *  Stockage des images pour le compte rendu
+  - Presentation du projet : 2425_presentation_projets_1A_Fiack.pdf
 - Hardware :
-    * On retrouve ici la schématique du projet réalisé sur le logiciel Kicad.
+    * On retrouve ici la schématique ainsi que le PCB du projet réalisé sur le logiciel Kicad.
 - Software :
     * Emplacement de la partie programmation sur le logiciel STM32CubeIde. 
 
+## Cahier des charges 
+
+Le projet "Pédale MIDI" a pour objectif de développer une pédale MIDI autonome permettant à un utilisateur, notamment un musicien, de naviguer entre différents sons MIDI à l’aide de deux boutons (UP/DOWN) et de contrôler en temps réel un paramètre comme le volume ou la modulation via une pédale d’expression analogique. Le système repose sur un microcontrôleur STM32G431KBTx chargé de gérer les entrées (boutons et pédale via GPIO et ADC), l’affichage du programme sélectionné sur un écran 7 segments double via un multiplexage piloté par un timer (TIM4), et la transmission des messages MIDI (Program Change et Control Change) au format UART vers un PC ou un instrument. Le dispositif doit être compact, alimenté en 5V avec régulation locale en 3.3V, intégrer un affichage clair et une connectique accessible, tout en respectant des contraintes de stabilité, de simplicité d'utilisation et de fiabilité en conditions de jeu.
 
 ## I / PARTIE HARDWARE
 
@@ -27,7 +35,11 @@ Le système repose sur une carte STM32 qui centralise la lecture des entrées (p
 
 ### Schéma Électronique
 
-Le schéma du projet a été réalisé sur **KiCad**. Il comprend :
+Le schéma du projet a été réalisé sur **KiCad**. Voici le visuel de la schématique ci-dessous :
+
+![Texte alternatif](Doc/ImgReadme/Schematique_pedale.PNG "Titre de l'image").
+
+Il contient :
 
 - **Unité centrale** : STM32G431KBTx
 - **Conditionnement du signal de pédale** via AOP
@@ -123,6 +135,68 @@ Le schéma du projet a été réalisé sur **KiCad**. Il comprend :
 - **Pourquoi ce choix ?**
   - Connecteur standard ST utilisé à l’ENSEA
   - Facilité de reprogrammation et débogage en temps réel
+
+## Conception du PCB
+
+La carte électronique de la pédale MIDI a été conçue avec **KiCad** et repose sur un **PCB 4 couches**, permettant une organisation optimisée des signaux, de l’alimentation et du plan de masse.
+
+---
+
+### Organisation des couches
+
+Le PCB utilise 4 couches réparties comme suit :
+
+- **Couche 1 (Top Layer)** : Routage principal des signaux (GPIO, UART, ADC, affichage…).
+- **Couche 2 (Inner Layer 1)** : Plan de masse complet, essentiel pour limiter les perturbations et garantir des références stables.
+- **Couche 3 (Inner Layer 2)** : Plan d’alimentation (3.3 V et 5 V), isolé du plan de masse pour éviter les couplages indésirables.
+- **Couche 4 (Bottom Layer)** : Routage secondaire, signaux de commande, entrées utilisateur et connexions vers les périphériques.
+
+Cette structure améliore la **stabilité électrique**, **limite les interférences**, et permet une **meilleure compacité** du design.
+
+---
+
+### Placement des composants
+
+Le placement a été réfléchi selon une logique de blocs fonctionnels :
+
+- Le **microcontrôleur STM32G431KBTx** est centré sur la carte pour limiter la longueur des pistes critiques.
+- La **section AOP + pédale** est placée en bas à gauche, proche du connecteur J2 pour une lecture propre du signal analogique.
+- Le **régulateur de tension (BU33SD5WG)** est positionné en haut à proximité des entrées d’alimentation (J4/J5).
+- Les **transistors Q1 et Q2 (DTA123J)** sont proches du connecteur LED J7, pour commander les chiffres du double 7 segments.
+- Tous les **connecteurs** sont en périphérie pour un accès facile :
+  - J2 pour la pédale
+  - J5 pour l’alimentation
+  - J7 pour l’écran LED
+  - J3 (STDC14) pour le débogage
+  - J6 pour les boutons poussoirs
+
+---
+
+### Routage et bonnes pratiques
+
+- **Pistes d’alimentation** élargies pour minimiser les chutes de tension.
+- **Condensateurs de découplage** positionnés au plus près des broches VDD du microcontrôleur.
+- **Vias traversants** utilisés avec parcimonie pour relier efficacement les couches.
+- Les signaux sensibles (notamment le **signal ADC**) ont été routés avec soin pour éviter les interférences.
+- Le **multiplexage de l'affichage** a été routé de façon à réduire les croisements de pistes.
+
+---
+
+### Fonctions complémentaires
+
+- **Jumpers JP1/JP2** : utilisés pour activer ou désactiver certaines fonctions (ex : liaison série ou configuration debug).
+- **Points de test TP1/TP2** : permettent de vérifier le signal analogique traité par les AOP.
+- **Trous de fixation** (H1–H5) : assurent une intégration mécanique solide de la carte dans un boîtier.
+
+---
+
+### Aperçu du PCB
+  
+> ![Texte alternatif](Doc/ImgReadme/PCB_pedale.PNG "Titre de l'image").
+> *Vue du routage et du placement des composants sur 4 couches.*
+
+> ![Texte alternatif](Doc/ImgReadme/Visu3D_pedale.PNG "Titre de l'image").
+> *Vue en 3D du PCB*
 
 
 ### Justification du choix des composants
@@ -491,4 +565,40 @@ sequenceDiagram
     deactivate PC
 ```
 
+# III/ PARTIE TEST FONCTIONNEL
+
+Après la conception et l’assemblage de la carte, plusieurs tests fonctionnels ont été réalisés afin de valider le bon fonctionnement de chaque bloc du système.
+
+### Test des boutons UP / DOWN
+- **But** : Vérifier l’incrémentation ou décrémentation du programme MIDI via les boutons.
+- **Méthode** : Appui répété sur les boutons tout en observant l’affichage 7 segments et les messages MIDI envoyés.
+- **Résultat attendu** : L’affichage change entre 0 et 127, et chaque appui génère un message MIDI **Program Change** correctement transmis sur l’interface UART.
+
+Voici une image représentant l'incrémentation en appuyant sur les boutons UP/DOWN :  
+> ![Texte alternatif](Doc/ImgReadme/20250526_165851.jpg "Titre de l'image").
+
+### Test de la pédale d’expression
+- **But** : Vérifier que la position de la pédale est correctement traduite.
+- **Méthode** : Vérification à l'aide d'un oscilloscope afin de réaliser une mesure de la tension analogique en sortie et consatater la variation de tension.
+- **Résultat attendu** : La plage 0V–3.3V est bien convertie en une valeur de 0 à 127. On constate une variation de la tension à l'oscilloscope. Pour un meilleur visuel, nous avons utilisé les LEDs pour constater un variation linéaire de la tension. 
+
+Voici des images représentant une variation de la tension, avec la pédale, à l'aide des LEDs  :
+> ![Texte alternatif](Doc/ImgReadme/20250526_165904.jpg "Titre de l'image").
+> ![Texte alternatif](Doc/ImgReadme/20250526_165908.jpg "Titre de l'image"). 
+
+Voici une image représentant une variation de la tension, avec la pédale, à l'aide de l'oscilloscope :
+
+> ![Texte alternatif](Doc/ImgReadme/osc1.PNG "Titre de l'image").
+
+### Test de l'affichage 7 segments
+- **But** : S’assurer que l’écran affiche correctement le numéro du programme MIDI.
+- **Méthode** : Envoi manuel de valeurs de test dans la variable `globalToDisplay` (ou appui sur les boutons).
+- **Résultat attendu** : Affichage stable, chiffres bien multiplexés, visibilité correcte même en environnement lumineux.
+
+> ![Texte alternatif](Doc/ImgReadme/20250526_165842.jpg "Titre de l'image"). 
+
+### Test de l’alimentation
+- **But** : Valider la stabilité des tensions d’alimentation 3.3V et 5V.
+- **Méthode** : Mesure au multimètre, et affichage sur les LEDs.
+- **Résultat attendu** : Tension de 3.3V régulée propre, sans oscillations ni chute lors de sollicitations.
 
