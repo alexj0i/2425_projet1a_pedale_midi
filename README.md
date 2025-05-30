@@ -351,9 +351,9 @@ HAL_UART_Transmit(&huart1, data, 2, HAL_MAX_DELAY);
 ``` 
 uint8_t ADCValue(void)
 {
-	HAL_ADC_Start(&hadc1);
-	HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-	uint32_t lastADCValue = HAL_ADC_GetValue(&hadc1); 
+    HAL_ADC_Start(&hadc1);
+    HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+    uint32_t lastADCValue = HAL_ADC_GetValue(&hadc1); 
     HAL_ADC_Stop(&hadc1); // economie d'energie on éteint l'adc si il n'est pas utilisé.
     return (uint8_t)((lastADCValue * 127) / 4095);
 }
