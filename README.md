@@ -1,6 +1,49 @@
 
 # Projet 1A Pédale MIDI
 
+Ce projet vise à concevoir une pédale autonome destinée aux musiciens souhaitant contrôler facilement des sons MIDI. L'utilisateur peut naviguer entre différents programmes MIDI grâce à deux boutons **UP/DOWN**, et ajuster en temps réel un paramètre tel que le **volume** ou la **modulation** via une **pédale d’expression analogique**.
+
+
+## Sommaire
+
+- [Équipe](#équipe)
+- [Description des dossiers](#description-des-dossiers)
+- [Cahier des charges](#cahier-des-charges)
+- [I. Partie Hardware](#i-partie-hardware)
+  - [Architecture générale](#architecture-générale)
+  - [Schéma électronique](#schéma-électronique)
+  - [Détail des blocs matériels](#détail-des-blocs-matériels)
+    - [1. Microcontrôleur](#1-microcontrôleur)
+    - [2. Alimentation](#2-alimentation)
+    - [3. Entrée analogique – Pédale d’expression](#3-entrée-analogique--pédale-dexpression)
+    - [4. Affichage LED 7 segments](#4-affichage-led-7-segments)
+    - [5. Entrées utilisateur – Boutons poussoirs](#5-entrées-utilisateur--boutons-poussoirs)
+    - [6. Communication MIDI](#6-communication-midi)
+    - [7. Programmation / Debug](#7-programmation--debug)
+  - [Conception du PCB](#conception-du-pcb)
+    - [Organisation des couches](#organisation-des-couches)
+    - [Placement des composants](#placement-des-composants)
+    - [Routage et bonnes pratiques](#routage-et-bonnes-pratiques)
+    - [Fonctions complémentaires](#fonctions-complémentaires)
+- [II / PARTIE SOFTWARE](#iipartie-software)
+  - [Notions clefs](#notions-clefs)
+    - [1. Définition du MIDI](#1-definition-du-midi)
+    - [2. Forme d’un message MIDI](#2-forme-dun-message-midi)
+  - [Objectifs de programmation](#objectifs-de-programmation)
+    - [1. Interaction entre la STM32, les périphériques d’entrée et le système MIDI](#1-interaction-entre-la-stm32-les-périphériques-dentrée-et-le-système-midi)
+    - [2. Les éléments à coder](#2-les-élements-à-coder)
+  - [Code et projet](#code-et-projet)
+    - [1. Agencement du projet dans STM32CubeIDE](#1-agencement-du-projet-dans-stm32cubeide)
+    - [2. Le code et explications détaillées](#2-le-code-et-explications-détaillées)
+
+  - [3. Paramétrage de la STM32 (pin, TIMER, interruptions)](#3-paramétrage-de-la-stm32-pin-timer-interruptions-)
+  - [4. Résumé du fonctionnement SOFTWARE](#4-résumé-du-fonctionnement-software)
+- [III / PARTIE TEST FONCTIONNEL](#iii-partie-test-fonctionnel)
+    - [Test des boutons UP / DOWN](#test-des-boutons-up--down)
+    - [Test de la pédale](#test-de-la-pédale-dexpression)
+    - [Test de l'afficheur](#test-de-laffichage-7-segments)
+    - [Test de l'alimentation](#test-de-lalimentation)
+
 ## Équipe  
 - **TURGUT Iprahim**  
 - **PREVOST Alexian**  
@@ -29,7 +72,7 @@ Le projet "Pédale MIDI" a pour objectif de développer une pédale MIDI autonom
 
 ### Architecture Générale
 
-Le système repose sur une carte STM32 qui centralise la lecture des entrées (pédale, boutons), l’affichage 7 segments, et la transmission MIDI via UART. L’ensemble est alimenté en **3,3 V**, régulé à partir d’une source **+5 V**.
+Le système repose sur une carte STM32 qui centralise la lecture des entrées (pédale, boutons), l'afficheur 7 segments, et la transmission MIDI via UART. L’ensemble est alimenté en **3,3 V**, régulé à partir d’une source **+5 V**.
 
 ---
 
@@ -60,7 +103,7 @@ Il contient :
   - **GPIOs** pour lire l'état des boutons UP/DOWN
   - **EXTI** pour gérer les interruptions sur appuis bouton / pédale
   - **USART1 (UART)** pour la communication MIDI (sortie TX)
-  - **TIM4** pour gérer le multiplexage de l'affichage 7 segments (interruption périodique)
+  - **TIM4** pour gérer le multiplexage de l'afficheur 7 segments (interruption périodique)
 - **Alimentation** : 3.3V régulée par LDO
 - **Avantages** :
   - Microcontrôleur puissant et polyvalent
@@ -90,7 +133,7 @@ Il contient :
   - MCP6002 est un AOP **rail-to-rail**, faible consommation, économique
   - Compatible avec alimentation 3.3V
 
-#### 4. Affichage LED 7 segments
+#### 4. Afficheur LED 7 segments
 - **Nombre de chiffres** : 2 chiffres (double afficheur)
 - **Commande** :
   - **Multiplexage** : affichage alterné via interruptions du TIM4
@@ -148,7 +191,7 @@ Le PCB utilise 4 couches réparties comme suit :
 
 - **Couche 1 (Top Layer)** : Routage principal des signaux (GPIO, UART, ADC, affichage…).
 - **Couche 2 (Inner Layer 1)** : Plan de masse complet, essentiel pour limiter les perturbations et garantir des références stables.
-- **Couche 3 (Inner Layer 2)** : Plan d’alimentation (3.3 V et 5 V), isolé du plan de masse pour éviter les couplages indésirables.
+- **Couche 3 (Inner Layer 2)** : Plan d’alimentation (+ 3.3 V et + 3.3 VA), isolé du plan de masse pour éviter les couplages indésirables.
 - **Couche 4 (Bottom Layer)** : Routage secondaire, signaux de commande, entrées utilisateur et connexions vers les périphériques.
 
 Cette structure améliore la **stabilité électrique**, **limite les interférences**, et permet une **meilleure compacité** du design.
@@ -208,7 +251,7 @@ Le placement a été réfléchi selon une logique de blocs fonctionnels :
 | DTA123J             | Commutation LED          | Transistors PNP avec résistances intégrées → gain de place. |
 | BU33SD5WG           | Régulateur               | Régulation stable 3.3V, faible chute de tension.        |
 | RV1 (470 Ω)         | Réglage de gain          | Permet un calibrage manuel de la pédale.                |
-| Affichage 7 segments| Retour visuel utilisateur| Simple, lisible, facilement multiplexé avec 2 chiffres. |
+| Afficheur 7 segments| Retour visuel utilisateur| Simple, lisible, facilement multiplexé avec 2 chiffres. |
 
 
 # II/PARTIE SOFTWARE
@@ -580,7 +623,7 @@ Après la conception et l’assemblage de la carte, plusieurs tests fonctionnels
 
 ### Test des boutons UP / DOWN
 - **But** : Vérifier l’incrémentation ou décrémentation du programme MIDI via les boutons.
-- **Méthode** : Appui répété sur les boutons tout en observant l’affichage 7 segments et les messages MIDI envoyés.
+- **Méthode** : Appui répété sur les boutons tout en observant l’afficheur 7 segments et les messages MIDI envoyés.
 - **Résultat attendu** : L’affichage change entre 0 et 127, et chaque appui génère un message MIDI **Program Change** correctement transmis sur l’interface UART.
 
 Voici une image représentant l'incrémentation en appuyant sur les boutons UP/DOWN :  
@@ -599,7 +642,7 @@ Voici une image représentant une variation de la tension, avec la pédale, à l
 
 > ![Texte alternatif](Doc/ImgReadme/osc1.PNG "Titre de l'image").
 
-### Test de l'affichage 7 segments
+### Test de l'afficheur 7 segments
 - **But** : S’assurer que l’écran affiche correctement le numéro du programme MIDI.
 - **Méthode** : Envoi manuel de valeurs de test dans la variable `globalToDisplay` (ou appui sur les boutons).
 - **Résultat attendu** : Affichage stable, chiffres bien multiplexés, visibilité correcte même en environnement lumineux.
