@@ -654,3 +654,10 @@ Voici une image représentant une variation de la tension, avec la pédale, à l
 - **Méthode** : Mesure au multimètre, et affichage sur les LEDs.
 - **Résultat attendu** : Tension de 3.3V régulée propre, sans oscillations ni chute lors de sollicitations.
 
+## Conclusion
+
+Le projet **Pédale MIDI** a permis de concevoir, réaliser et tester une solution matérielle et logicielle complète répondant à un besoin concret dans le domaine musical : offrir un contrôle simple, autonome et précis de paramètres MIDI via une pédale d’expression. Grâce à l’intégration d’un microcontrôleur STM32, d’un affichage 7 segments piloté en multiplexage, et d’une interface utilisateur intuitive (boutons, pédale), l’ensemble assure un fonctionnement stable et réactif.
+
+Tous les blocs fonctionnels (lecture analogique, traitement, affichage) ont été validés par des tests pratiques, confirmant la fiabilité du système. Le recours à un PCB 4 couches a permis une implantation propre et compacte, propice à une intégration dans un boîtier de type pédale d’effet.
+
+Ce projet nous a permis de renforcer nos compétences en électronique embarquée, conception PCB, programmation temps réel, et communication série/MIDI. Il constitue une base solide pour un futur développement de produit orienté musique numérique.
