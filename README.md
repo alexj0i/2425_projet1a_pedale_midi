@@ -478,14 +478,14 @@ else
 >> Si on doit afficher **le chiffre des dizaines** (` if (displayNumber == 0) `)
 > `GPIOB->ODR = array[globalToDisplay / 10];` permet d'afficher le chiffre des dizaines sur l'écran 7 segments. Elle divise la valeur `globalToDisplay` par 10 pour extraire le chiffre des dizaines, puis utilise ce résultat comme index dans le tableau `array` pour récupérer le motif binaire correspondant aux segments à allumer. Ensuite, ce motif est écrit dans le registre `GPIOB->ODR`, ce qui active les bons segments du chiffre sur l'afficheur.
 Les commandes :
->`HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); 
->HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); `
+>`HAL_GPIO_WritePin(GPIO_PORT_B, GPIO_PIN_0, GPIO_PIN_SET); 
+>HAL_GPIO_WritePin(GPIO_PORT_B, GPIO_PIN_1, GPIO_PIN_RESET); `
 Activent le chiffre des dizaines et désactive le chiffre des unités.
 >> Si on doit afficher **le chiffre des unités** (`else`)
 >  `GPIOB->ODR = array[globalToDisplay % 10];` fait de même que précèdemment pour le chiffre des unités.
 Les commandes :
->`HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); 
->HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET); `
+>`HAL_GPIO_WritePin(GPIO_PORT_B, GPIO_PIN_0, GPIO_PIN_RESET); 
+>HAL_GPIO_WritePin(GPIO_PORT_B, GPIO_PIN_1, GPIO_PIN_SET); `
 Activent le chiffre des unités et désactive le chiffre des dizaines.
 >* `displayNumber = 1 - displayNumber;`
 Alterne la valeur de `displayNumber` entre 0 et 1 à chaque appel. Elle permet de basculer l’affichage entre les deux chiffres du 7 segments pour réaliser le multiplexage.
